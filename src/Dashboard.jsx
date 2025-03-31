@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
-import { useUser } from "./UserContext";
+import { useUser } from './contexts/UserContext';
 
 const Dashboard = () => {
     const { user, setUser } = useUser();

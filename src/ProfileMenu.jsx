@@ -6,7 +6,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
-import { useUser } from "./UserContext";
+import { useUser } from './contexts/UserContext';
 
 export default function ProfileMenu() {
   const { user } = useUser();

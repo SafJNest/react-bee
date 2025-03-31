@@ -10,9 +10,14 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+const PORT = process.env.PORT || 3001;
+const SERVER_HOST = process.env.SERVER_HOST + ":" + PORT;
+
 app.get("/auth/discord", async (req, res) => {
+
   const code = req.query.code;
-  if (!code) return res.status(400).json({ error: "Missing code" });
+  if (!code) 
+    return res.status(400).json({ error: "Missing code" });
 
   try {
     const tokenResponse = await axios.post(
@@ -22,7 +27,7 @@ app.get("/auth/discord", async (req, res) => {
         client_secret: process.env.CLIENT_SECRET,
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "http://localhost:3001/auth/discord",
+        redirect_uri: SERVER_HOST + "/auth/discord",
         scope: "identify guilds",
       }),
       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
@@ -40,8 +45,7 @@ app.get("/auth/discord", async (req, res) => {
       sameSite: "lax",
     });
 
-    // Redirigi alla dashboard
-    res.redirect("http://localhost:3000/dashboard");
+    res.redirect(process.env.HOST + "/dashboard");
 
   } catch (error) {
     console.error("Error exchanging code:", error.response?.data || error.message);
@@ -68,5 +72,4 @@ app.get("/discord/me", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

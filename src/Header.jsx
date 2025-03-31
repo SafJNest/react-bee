@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProfileMenu from './ProfileMenu';
-import { useUser } from './UserContext';
+import { useUser } from './contexts/UserContext';
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
